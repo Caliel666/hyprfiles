@@ -6,9 +6,9 @@ from gi.repository import Gtk
 class MyWindow(Gtk.Window):
 
     def __init__(self):
-        Gtk.Window.__init__(self, title="Hypr Settings")
+        Gtk.Window.__init__(self, title="Hyprsettings")
 
-        self.set_border_width(10)
+        self.set_border_width(0)
         self.set_default_size(800, 600)
 
         self.box = Gtk.Paned()
@@ -53,7 +53,7 @@ class MyWindow(Gtk.Window):
 
         header_bar = Gtk.HeaderBar()
         header_bar.set_show_close_button(True)
-        header_bar.props.title = "Hypr Files"
+        header_bar.props.title = "Hyprsettings"
         header_bar.pack_end(self.save_button)
 
         self.set_titlebar(header_bar)
@@ -61,7 +61,7 @@ class MyWindow(Gtk.Window):
 
         tree_context = self.treeview.get_style_context()
         tree_context.remove_class("view")
-        tree_context.add_class("background")
+        tree_context.add_class("sidebar")
         
         
     def on_row_activated(self, treeview, path, column):

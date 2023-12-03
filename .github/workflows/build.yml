@@ -12,6 +12,48 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v3
+
+      - name: Dependencies
+        if: startsWith(matrix.platform, 'ubuntu')
+        run: sudo apt install libcairo2-dev python3-dev libpango1.0-dev libgirepository1.0-dev
+
+      - name: Build
+        uses: sayyid5416/pyinstaller@v1
+        if: "!startsWith(matrix.platform, 'windows')"
+        with:
+          python_ver: '3.11.6'
+          spec: main.py
+          requirements: requirements.txt
+          options: --onefile, --noconsole
+          
+      - name: Build Windows
+        uses: sayyid5416/pyinstaller@v1
+        if: startsWith(matrix.platform, 'windows')
+        with:
+          python_ver: '3.11.6'
+          spec: ModEnabler.py
+          requirements: requirements.txt
+          options: --onefile, --noconsole
+          
+      - name: Upload ${{ matrix.platform }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.platform }}
+          path: dist/*
+name: build
+on:
+  push:
+  pull_request:
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, windows-latest, ubuntu-latest]
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v3
       - name: Build
         uses: sayyid5416/pyinstaller@v1
         if: "!startsWith(matrix.platform, 'windows')"

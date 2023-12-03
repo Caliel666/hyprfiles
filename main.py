@@ -6,7 +6,7 @@ from gi.repository import Gtk
 class MyWindow(Gtk.Window):
 
     def __init__(self):
-        Gtk.Window.__init__(self, title="Hypr Files")
+        Gtk.Window.__init__(self, title="Hypr Settings")
 
         self.set_border_width(10)
         self.set_default_size(800, 600)
